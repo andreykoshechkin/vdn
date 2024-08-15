@@ -1,0 +1,5 @@
+  comboBox.setItemCaptionGenerator(pifData -> 
+            Stream.of(pifData.getPifName(), pifData.getPifAcc(), pifData.getPifCur())
+                  .filter(value -> value != null && !value.isEmpty())
+                  .collect(Collectors.joining(" - "))
+        );
