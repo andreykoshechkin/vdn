@@ -1,0 +1,35 @@
+private ComboBox<FrontExternalAccData> creditAccsExternal;
+private ComboBox<FrontExternalAccData> debitAccsExternal;
+
+private void clearFields(TextField korrAccField, TextField bikField, TextField bankNameField) {
+    korrAccField.clear();
+    bikField.clear();
+    bankNameField.clear();
+}
+
+private void updateFields(FrontExternalAccData data, TextField korrAccField, TextField bikField, TextField bankNameField) {
+    // Очистка полей
+    clearFields(korrAccField, bikField, bankNameField);
+
+    // Заполнение полей, если данные не пусты
+    if (data != null && data.getBik() != null) {
+        korrAccField.setValue(data.getKorrAcc());
+        bikField.setValue(data.getBik());
+        bankNameField.setValue("Совкомбанк");
+    }
+}
+
+public void initializeListeners() {
+    debitAccsExternal.addValueChangeListener(listener -> {
+        FrontExternalAccData data = debitAccsExternal.getValue();
+        updateFields(data, debitKorrAccExternal, debitBikExternal, bankName);
+        directOffVisibilityCallback.action();
+    });
+
+    creditAccsExternal.setItemCaptionGenerator(FrontExternalAccData::getAcc);
+    creditAccsExternal.addValueChangeListener(listener -> {
+        FrontExternalAccData data = creditAccsExternal.getValue();
+        updateFields(data, creditKorrAccExternal, creditBikExternal, bankName);
+        directOffVisibilityCallback.action();
+    });
+}
